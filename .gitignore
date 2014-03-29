@@ -6,3 +6,9 @@
 *.prefs
 
 *.class
+
+out.txt
+
+in.txt
+
+numbers.dat
