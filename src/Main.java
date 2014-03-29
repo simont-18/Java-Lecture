@@ -1,48 +1,29 @@
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Scanner;
-
 import javax.swing.JOptionPane;
 
 public class Main {
 
-	public static void main(String[] args) throws IOException {
-		//write even numbers to file
-		writeNumbers(0, false);
-		JOptionPane.showMessageDialog(null, "Even numbers written to the file. Press OK to display.", "Message", JOptionPane.INFORMATION_MESSAGE);
-		displayContents();
+	public static void main(String[] args) {
+		int counter = 1, number = 0, largest = -1;
 		
-		//append odd numbers to file
-		writeNumbers(1, true);
-		JOptionPane.showMessageDialog(null, "Odd numbers appended to the file. Press OK to display.", "Message", JOptionPane.INFORMATION_MESSAGE);
-		displayContents();
-
-	}
-	
-	public static void writeNumbers(int start, boolean append) throws IOException{
-		PrintWriter out = new PrintWriter(new FileOutputStream("numbers.dat", append));
-		
-		if(append == true)
-			out.println();
-		
-		for(int i = start; i <= 100; i+=2) {
-			out.print(i + " ");
+		while(counter <= 10) {
+			try {
+				number = Integer.parseInt(JOptionPane.showInputDialog("Please enter a single digit number ranging from 0 to 9! (-1 to exit)"));
+				if(number == -1)
+					System.exit(0);
+				else if(number >= 0 && number <= 9) {
+					if(number > largest)
+						largest = number;
+				} else
+					throw new Exception("Not a single digit number!");
+			
+				counter++;
+			} catch(NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
+			} catch(Exception e) {
+				JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 		
-		if(out != null)
-			out.close();
-	}
-	
-	public static void displayContents() throws IOException {
-		Scanner in = new Scanner(new FileInputStream("numbers.dat"));
-		
-		while(in.hasNext()) {
-			System.out.println(in.nextLine());
-		}
-		
-		if(in != null)
-			in.close();
+		JOptionPane.showMessageDialog(null, "The largest number is: " + number, "Result" , JOptionPane.INFORMATION_MESSAGE);
 	}
 }
